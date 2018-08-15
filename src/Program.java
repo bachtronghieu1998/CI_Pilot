@@ -1,7 +1,10 @@
+import java.util.ArrayList;
+
 public class Program {
 
     public static void main(String[] args) {
         GameWindow gameWindow=new GameWindow();
-        System.out.println("....");
+        gameWindow.MainLoop();
+
     }
 }
