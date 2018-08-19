@@ -5,7 +5,9 @@ import java.awt.event.*;
 public class GameWindow extends JFrame {
     GameCanvas gameCanvas;
     long lastTimeRender=0;
+   // InputManager inputManager;
     public GameWindow() throws HeadlessException {
+   //     inputManager=new InputManager();
         setTitle("Micro-Wave");
         this.setSize(600,800);
         //SetUp Canvas
@@ -15,20 +17,20 @@ public class GameWindow extends JFrame {
                 System.exit(0);
             }
         });
+
         gameCanvas=new GameCanvas();
         this.setContentPane(gameCanvas);
-     //   setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         //Key listener
         this.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-              gameCanvas.KeyPress(e);
+              gameCanvas.inputManager.KeyPress(e);
             }
 
             @Override
             public void keyReleased(KeyEvent e) {
-              gameCanvas.KeyRelease(e);
+              gameCanvas.inputManager.KeyRelease(e);
             }
         });
         this.setResizable(false);
