@@ -2,24 +2,24 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class PlayerBullet {
-    int x;
-    int y;
+   Vector2D position;
      Image img;
 
     public PlayerBullet(int x, int y) {
+        position=new Vector2D(x,y);
         this.img=ImageUtil.LoadImage("images/bullet/player/mb69bullet1.png");
-        this.x = x;
-        this.y = y;
     }
 
     public PlayerBullet() {
     }
 
      public void run(){
-            this.y-=5;
+          Vector2D velocity=new Vector2D();
+           velocity.y-=7;
+           position.addUp(velocity);
     }
 
      void render(Graphics g){
-            g.drawImage(img,x,y,null);
+            g.drawImage(img,(int)position.x,(int)position.y,null);
     }
 }

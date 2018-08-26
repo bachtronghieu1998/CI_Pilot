@@ -18,10 +18,13 @@ public class GameCanvas extends JPanel {
     Graphics backBufferGraphics;
     ImageUtil imageUtil;
      InputManager inputManager;
+    ArrayList<PlayerBullet> bullets;
 
     public GameCanvas() {
+        bullets=new ArrayList<PlayerBullet>();
         inputManager=new InputManager();
         player=new Player(300-32,500-40);
+        player.bullets=this.bullets;
        player.inputManager=inputManager;
         enemyArrayList=new ArrayList<>();
         backBuffer=new BufferedImage(600,800, BufferedImage.TYPE_INT_ARGB);
@@ -48,6 +51,12 @@ public class GameCanvas extends JPanel {
     void update() {
         //Update player position
         player.run();
+
+        //Update Bullet
+        for(PlayerBullet b:bullets){
+            b.run();
+        }
+
         //Update enemy pos
         for(Enemy e: enemyArrayList){
             e.run();

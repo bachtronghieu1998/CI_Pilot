@@ -2,32 +2,55 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Player {
-    int posX;
-    int posY;
+    Vector2D position;
     Image img;
     InputManager inputManager;
     ArrayList<PlayerBullet> bullets;
+
     boolean locked =false;
     int count =0;
 
     public Player(int posX, int posY) {
        this.img= ImageUtil.LoadImage("images/player/MB-69/player1.png");
-        bullets =new ArrayList<>();
-        this.posX = posX;
-        this.posY = posY;
+        position=new Vector2D(posX,posY);
     }
 
      void render(Graphics g){
-        g.drawImage(img,posX,posY,null);
+        g.drawImage(img,(int)position.x,(int)position.y,null);
          for(PlayerBullet p: bullets){
              p.render(g);
          }
     }
 
-    public void LockTheGun(){
+
+
+    void checkPosition(){
+        if(position.x==-32 && inputManager.leftPressed){
+            inputManager.leftPressed=false;
+        }
+        if(position.x==568 && inputManager.rightPressed){
+            inputManager.rightPressed=false;
+        }
+        if(position.y==620&& inputManager.downPressed){
+            inputManager.downPressed=false;
+        }
+        if(position.y==0&& inputManager.upPressed){
+            inputManager.upPressed=false;
+        }
+    }
+
+
+
+    void run(){
+      checkPosition();
+      this.move();
+      this.shoot();
+    }
+
+    private void shoot() {
         //Lock the player gun
         if(inputManager.xPressed && !locked){
-            PlayerBullet b3=new PlayerBullet(this.posX,this.posY);
+            PlayerBullet b3=new PlayerBullet((int)position.x,(int)position.y);
             bullets.add(b3);
             locked =true;
         }
@@ -41,39 +64,20 @@ public class Player {
         }
     }
 
-
-    void checkPosition(){
-        if(this.posX==-32 && inputManager.leftPressed){
-            inputManager.leftPressed=false;
-        }
-        if(this.posX==568 && inputManager.rightPressed){
-            inputManager.rightPressed=false;
-        }
-        if(this.posY==620&& inputManager.downPressed){
-            inputManager.downPressed=false;
-        }
-        if(this.posY==0&& inputManager.upPressed){
-            inputManager.upPressed=false;
-        }
-    }
-
-    void run(){
-      checkPosition();
+    private void move() {
+        Vector2D verlocity=new Vector2D();
         if (inputManager.rightPressed) {
-            this.posX += 5;
+            verlocity.x+=5;
         }
         if (inputManager.leftPressed) {
-            this.posX -= 5;
+            verlocity.x-= 5;
         }
         if (inputManager.downPressed) {
-            this.posY += 5;
+            verlocity.y += 5;
         }
         if (inputManager.upPressed) {
-            this.posY -= 5;
+            verlocity.y -= 5;
         }
-        for(PlayerBullet b:bullets){
-            b.run();
-        }
-        LockTheGun();
+        this.position.addUp(verlocity);
     }
 }
