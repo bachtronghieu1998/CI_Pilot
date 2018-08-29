@@ -1,13 +1,18 @@
+package players;
+
+import basis.ImageRenderer;
+import basis.Vector2D;
+
 import java.awt.*;
-import java.util.ArrayList;
 
 public class PlayerBullet {
    Vector2D position;
-     Image img;
+     ImageRenderer img;
 
     public PlayerBullet(int x, int y) {
         position=new Vector2D(x,y);
-        this.img=ImageUtil.LoadImage("images/bullet/player/mb69bullet1.png");
+        img=new ImageRenderer("images/bullet/player/mb69bullet1.png");
+
     }
 
     public PlayerBullet() {
@@ -15,11 +20,11 @@ public class PlayerBullet {
 
      public void run(){
           Vector2D velocity=new Vector2D();
-           velocity.y-=7;
+           velocity.y-=8;
            position.addUp(velocity);
     }
 
-     void render(Graphics g){
-            g.drawImage(img,(int)position.x,(int)position.y,null);
+    public void render(Graphics g){
+           img.render(g,position);
     }
 }

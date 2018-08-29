@@ -1,10 +1,15 @@
-import javax.imageio.ImageIO;
+package game;
+
+import basis.FrameCounter;
+import basis.ImageUtil;
+import enemy.Enemy;
+import enemy.EnemyBullet;
+import input.InputManager;
+import players.Player;
+import players.PlayerBullet;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -13,7 +18,7 @@ public class GameCanvas extends JPanel {
     Image background;
    ArrayList<Enemy> enemyArrayList;
    Player player;
-    int countEnemy =0;
+   FrameCounter countEnemy;
     BufferedImage backBuffer;
     Graphics backBufferGraphics;
     ImageUtil imageUtil;
@@ -22,10 +27,12 @@ public class GameCanvas extends JPanel {
 
     public GameCanvas() {
         bullets=new ArrayList<PlayerBullet>();
-        inputManager=new InputManager();
+
+        inputManager= InputManager.instance;
         player=new Player(300-32,500-40);
         player.bullets=this.bullets;
-       player.inputManager=inputManager;
+        countEnemy=new FrameCounter(70);
+
         enemyArrayList=new ArrayList<>();
         backBuffer=new BufferedImage(600,800, BufferedImage.TYPE_INT_ARGB);
         background=ImageUtil.LoadImage("images/background/background.png");
@@ -38,14 +45,16 @@ public class GameCanvas extends JPanel {
     }
 
     public void StopTheEnemy(){
-        countEnemy++;
-        if(countEnemy>70){
+        if(countEnemy.expired){
             Random rd=new Random();
-            int x= rd.nextInt(600-64*2)+64;
+            int x= rd.nextInt(Setting.width-64*2)+64;
             int y=-64;
             enemyArrayList.add(new Enemy(x,y));
-            countEnemy=0;
+            countEnemy.reset();
+        }else{
+            countEnemy.run();
         }
+
     }
 
     void update() {
@@ -65,11 +74,14 @@ public class GameCanvas extends JPanel {
         StopTheEnemy();
     }
 
-    void render(){
+     public void render(){
         ImageUtil.DrawImage(backBufferGraphics,background,0,0);
         player.render(backBufferGraphics);
         for(Enemy e: enemyArrayList){
           e.render(backBufferGraphics);
+        }
+        for(PlayerBullet p: bullets){
+            p.render(backBufferGraphics);
         }
 
         this.repaint();

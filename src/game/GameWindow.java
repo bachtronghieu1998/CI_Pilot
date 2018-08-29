@@ -1,3 +1,7 @@
+package game;
+
+import input.InputManager;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -5,11 +9,11 @@ import java.awt.event.*;
 public class GameWindow extends JFrame {
     GameCanvas gameCanvas;
     long lastTimeRender=0;
-   // InputManager inputManager;
+   // input.InputManager inputManager;
     public GameWindow() throws HeadlessException {
-   //     inputManager=new InputManager();
+   //     inputManager=new input.InputManager();
         setTitle("Micro-Wave");
-        this.setSize(600,800);
+        this.setSize(Setting.width,Setting.height);
         //SetUp Canvas
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -25,19 +29,19 @@ public class GameWindow extends JFrame {
         this.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-              gameCanvas.inputManager.KeyPress(e);
+                InputManager.instance.KeyPress(e);
             }
 
             @Override
             public void keyReleased(KeyEvent e) {
-              gameCanvas.inputManager.KeyRelease(e);
+                InputManager.instance.KeyRelease(e);
             }
         });
         this.setResizable(false);
         this.setVisible(true);
     }
 
-    void MainLoop(){
+    public void MainLoop(){
         while(true){
             long currentTime=System.nanoTime();
             if(currentTime-lastTimeRender>=17_000_000){
