@@ -1,32 +1,22 @@
 package players;
 
-import basis.ImageRenderer;
-import basis.Vector2D;
+import bases.GameObject;
+import bases.ImageRenderer;
+import bases.Vector2D;
 import input.InputManager;
 
-import java.awt.*;
-import java.util.ArrayList;
 
-public class Player {
-   public Vector2D position;
-   public ArrayList<PlayerBullet> bullets;
-   public ImageRenderer img;
+public class Player extends GameObject {
    PlayerShoot playerShoot;
     boolean locked =false;
     int count =0;
-
-    public Player(int posX, int posY) {
-      img=new ImageRenderer("images/player/MB-69/player1.png");
-        position=new Vector2D(posX,posY);
-      playerShoot=new PlayerShoot();
+    int id;
+    public Player(int x, int y,String picURL,int id) {
+        super(x, y);
+        this.imageRenderer=new ImageRenderer(picURL);
+        playerShoot=new PlayerShoot();
+        this.id=id;
     }
-
-    public void render(Graphics g){
-         img.render(g,position);
-
-    }
-
-
 
     public void checkPosition(){
         if(position.x==-32 && InputManager.instance.leftPressed){
@@ -44,8 +34,8 @@ public class Player {
     }
 
 
-
      public void run(){
+        super.run();
       checkPosition();
       this.move();
       this.shoot();
@@ -56,6 +46,7 @@ public class Player {
     }
 
     private void move() {
-        this.position.addUp(new PlayerMove().run());
+        new PlayerMove().run(this);
+
     }
 }

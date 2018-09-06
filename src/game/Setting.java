@@ -1,6 +1,6 @@
 package game;
 
 public class Setting {
-    static int width=600;
-    static int height=800;
+    public static int width=600;
+    public static int height=800;
 }

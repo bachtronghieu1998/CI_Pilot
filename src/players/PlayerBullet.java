@@ -1,30 +1,26 @@
 package players;
 
-import basis.ImageRenderer;
-import basis.Vector2D;
+import bases.GameObject;
+import bases.ImageRenderer;
+import bases.Vector2D;
 
 import java.awt.*;
 
-public class PlayerBullet {
-   Vector2D position;
-     ImageRenderer img;
+public class PlayerBullet extends GameObject {
 
-    public PlayerBullet(int x, int y) {
-        position=new Vector2D(x,y);
-        img=new ImageRenderer("images/bullet/player/mb69bullet1.png");
-
+    public PlayerBullet(int x, int y,String url) {
+        super(x, y);
+        this.imageRenderer=new ImageRenderer(url);
     }
 
-    public PlayerBullet() {
-    }
+
 
      public void run(){
+          super.run();
           Vector2D velocity=new Vector2D();
            velocity.y-=8;
            position.addUp(velocity);
     }
 
-    public void render(Graphics g){
-           img.render(g,position);
-    }
+
 }

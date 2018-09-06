@@ -1,7 +1,7 @@
-package basis;
+package bases;
 
 public class FrameCounter {
-     int count;
+    public int count;
     int countMax;
     public boolean expired;
 

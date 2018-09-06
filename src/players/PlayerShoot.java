@@ -1,10 +1,15 @@
 package players;
 
-import basis.FrameCounter;
+import bases.FrameCounter;
+import bases.GameObject;
+import bases.Vector2D;
 import input.InputManager;
+import input.MouseManager;
+
+import java.awt.event.MouseAdapter;
 
 public class PlayerShoot {
-    boolean locked =false;
+   private boolean locked =false;
    FrameCounter counter;
 
     public PlayerShoot() {
@@ -13,18 +18,30 @@ public class PlayerShoot {
 
     public void run(Player player) {
         //Lock the player gun
-        if(InputManager.instance.xPressed && !locked){
-            PlayerBullet b3=new PlayerBullet((int)player.position.x,(int)player.position.y);
-            player.bullets.add(b3);
-            locked =true;
-        }
+        if(player.id==1){
+            if(InputManager.instance.xPressed && !locked){
+                Vector2D bulletPos=player.position.substract(0,30);
+                PlayerBullet b3=new PlayerBullet((int)bulletPos.x,(int)bulletPos.y,"images/bullet/player/mb69bullet1.png");
+                GameObject.add(b3);
+                locked =true;
+            }
 
-        if(locked){
-           counter.run();
-           if(counter.expired){
-               locked=false;
-               counter.reset();
-           }
+        }
+        if(player.id==2) {
+
+            if (MouseManager.mouseManager.isClicked && !locked) {
+                Vector2D bulletPos = player.position.substract(0, 30);
+                PlayerBullet b3 = new PlayerBullet((int) bulletPos.x, (int) bulletPos.y,"images/bullet/player/mb70bullet1.png");
+                GameObject.add(b3);
+                locked = true;
+            }
+        }
+        if(this.locked){
+            counter.run();
+            if(counter.expired){
+                locked=false;
+                counter.reset();
+            }
         }
     }
 }
