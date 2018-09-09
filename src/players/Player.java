@@ -1,8 +1,10 @@
 package players;
 
+import bases.BoxCollider;
 import bases.GameObject;
 import bases.ImageRenderer;
 import bases.Vector2D;
+import enemy.Enemy;
 import input.InputManager;
 
 
@@ -16,6 +18,7 @@ public class Player extends GameObject {
         this.imageRenderer=new ImageRenderer(picURL);
         playerShoot=new PlayerShoot();
         this.id=id;
+        this.boxCollider=new BoxCollider(x,y,30,30);
     }
 
     public void checkPosition(){
@@ -39,6 +42,14 @@ public class Player extends GameObject {
       checkPosition();
       this.move();
       this.shoot();
+      hitEnemy();
+    }
+
+    private void hitEnemy() {
+        Enemy enemy= GameObject.checkCollision(this.boxCollider);
+        if(enemy!=null){
+           this.isActive=false;
+        }
     }
 
     public void shoot() {

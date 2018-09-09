@@ -19,7 +19,7 @@ public class GameCanvas extends JPanel {
      Background backGround;
 
     public GameCanvas() {
-        backGround=new Background();
+        backGround=new Background(0,0);
         GameObject.add(backGround);
         inputManager= InputManager.instance;
         player=new Player(200,500,"images/player/MB-69/player1.png",1);

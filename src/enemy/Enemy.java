@@ -1,9 +1,6 @@
 package enemy;
 
-import bases.FrameCounter;
-import bases.GameObject;
-import bases.ImageRenderer;
-import bases.Vector2D;
+import bases.*;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -19,6 +16,7 @@ public class Enemy extends GameObject {
         imageRenderer=new ImageRenderer("images/enemy/bacteria/bacteria1.png");
         counter=new FrameCounter(50);
         counter.count=30;
+        this.boxCollider=new BoxCollider(x,y,30,30);
     }
 
 
@@ -39,6 +37,7 @@ public class Enemy extends GameObject {
     }
 
     public void run(){
+        super.run();
         Vector2D veclocity=new Vector2D();
        veclocity.y+=2;
        position.addUp(veclocity);
@@ -49,5 +48,9 @@ public class Enemy extends GameObject {
    public void render(Graphics g){
         super.render(g);
 
+    }
+
+    public void getHit(){
+        this.destroy();
     }
 }

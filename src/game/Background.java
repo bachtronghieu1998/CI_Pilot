@@ -9,9 +9,12 @@ import java.awt.*;
 
 public class Background extends GameObject {
 
-    public Background() {
+
+
+
+    public Background(int x, int y) {
+        super(x, y);
         imageRenderer=new ImageRenderer("images/background/background.png");
-        this.position=new Vector2D(0,0);
     }
 
     public void render(Graphics g){

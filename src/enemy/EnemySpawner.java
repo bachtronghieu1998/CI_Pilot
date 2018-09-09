@@ -11,8 +11,11 @@ public class EnemySpawner extends GameObject {
 
     public static EnemySpawner enemySpawner=new EnemySpawner();
     public EnemySpawner() {
+        super();
         countEnemy=new FrameCounter(100);
     }
+
+
 
     public void insertEnemy(){
         if(countEnemy.expired){
