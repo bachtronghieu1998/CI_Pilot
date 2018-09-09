@@ -27,6 +27,7 @@ public class EnemyBullet extends GameObject {
        Player player= GameObject.checkCollisionPlayer(this.boxCollider);
        if(player!=null){
            player.isActive=false;
+           this.isActive=false;
        }
     }
 
