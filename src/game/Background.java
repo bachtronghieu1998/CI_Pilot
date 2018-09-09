@@ -9,9 +9,6 @@ import java.awt.*;
 
 public class Background extends GameObject {
 
-
-
-
     public Background(int x, int y) {
         super(x, y);
         imageRenderer=new ImageRenderer("images/background/background.png");
