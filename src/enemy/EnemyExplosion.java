@@ -6,6 +6,7 @@ import bases.ImageUtil;
 
 public class EnemyExplosion extends GameObject {
 
+    
     public EnemyExplosion(int x, int y) {
         super(x, y);
 
