@@ -2,8 +2,8 @@ package bases;
 
 import java.awt.*;
 
-public class ImageRenderer {
-   public Image img;
+public class ImageRenderer extends Renderer {
+
 
     public ImageRenderer(String url) {
         this.img= ImageUtil.LoadImage(url);

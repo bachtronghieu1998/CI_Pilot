@@ -1,22 +1,24 @@
 package bases;
 
 import blood.BloodSpawner;
-import enemy.Enemy;
 import enemy.EnemySpawner;
 import players.Player;
+import players.PlayerBullet;
 
 import java.awt.*;
 import java.util.ArrayList;
 
 public class GameObject {
     public Vector2D position;
-    public ImageRenderer imageRenderer;
+    public Renderer renderer;
+    public BoxCollider boxCollider;
+
     static private ArrayList<GameObject> gameObjects=new ArrayList<>();
    private static ArrayList<GameObject> newGameObjects=new ArrayList<>();
    public boolean isActive;
     public GameObject(int x,int y) {
         this.position=new Vector2D(x,y);
-        this.imageRenderer=null;
+        this.renderer =null;
         this.boxCollider=null;
         this.isActive=true;
     }
@@ -52,33 +54,19 @@ public class GameObject {
         EnemySpawner.enemySpawner.insertEnemy();
     }
 
-    public static Enemy checkCollision(BoxCollider boxCollider){
+    //generics
+    public static <T extends GameObject> T checkCollision(BoxCollider boxCollider,Class<T> cls){
           for(GameObject go: gameObjects){
               if(go.isActive && go.boxCollider !=null){
-                  if(go instanceof Enemy){
+                  if(go.getClass().equals(cls)){
                       if(go.boxCollider.collideWith(boxCollider)){
-                          return (Enemy) go;
+                          return (T) go;
                       }
                   }
               }
           }
           return null;
     }
-
-    public static Player checkCollisionPlayer(BoxCollider boxCollider){
-        for(GameObject go: gameObjects){
-            if(go.isActive && go.boxCollider !=null){
-                if(go instanceof Player){
-                    if(go.boxCollider.collideWith(boxCollider)){
-                        return (Player) go;
-                    }
-                }
-            }
-        }
-        return null;
-    }
-
-    public BoxCollider boxCollider;
 
     public static void renderAll(Graphics g){
         for(GameObject go:gameObjects){
@@ -94,8 +82,8 @@ public class GameObject {
     }
 
     public void render(Graphics g){
-        if(this.imageRenderer != null){
-            this.imageRenderer.render(g,position);
+        if(this.renderer != null){
+            this.renderer.render(g,position);
         }
 
         if(boxCollider!=null){
@@ -105,5 +93,25 @@ public class GameObject {
 
     public void destroy(){
         this.isActive=false;
+    }
+
+    public static PlayerBullet recycle(int x,int y,String url){
+        PlayerBullet pb=null;
+        for(GameObject go:gameObjects){
+            if (!go.isActive) {
+                if(go instanceof PlayerBullet){
+                    pb= (PlayerBullet) go;
+                }
+            }
+        }
+        if(pb==null){
+            pb=new PlayerBullet(x,y,url);
+            GameObject.add(pb);
+        }else{
+            pb.isActive=true;
+            pb.position.x=x;
+            pb.position.y=y;
+        }
+        return null;
     }
 }

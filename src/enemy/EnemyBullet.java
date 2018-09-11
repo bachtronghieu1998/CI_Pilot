@@ -6,13 +6,11 @@ import bases.ImageRenderer;
 import bases.Vector2D;
 import players.Player;
 
-import java.awt.*;
-
 public class EnemyBullet extends GameObject {
 
     public EnemyBullet(int x, int y) {
         super(x,y);
-       imageRenderer=new ImageRenderer("images/bullet/enemy/enemy2_bullet1.png");
+       renderer =new ImageRenderer("images/bullet/enemy/enemy2_bullet1.png");
        this.boxCollider=new BoxCollider(x,y,30,25);
     }
 
@@ -24,9 +22,9 @@ public class EnemyBullet extends GameObject {
     }
 
     private void hitPlayer() {
-       Player player= GameObject.checkCollisionPlayer(this.boxCollider);
+       Player player= GameObject.checkCollision(this.boxCollider,Player.class);
        if(player!=null){
-           player.isActive=false;
+//           player.isActive=false;
            this.isActive=false;
        }
     }

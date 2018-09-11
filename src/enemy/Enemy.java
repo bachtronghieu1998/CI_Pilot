@@ -13,7 +13,12 @@ public class Enemy extends GameObject {
 
     public Enemy(int x, int y) {
         super(x, y);
-        imageRenderer=new ImageRenderer("images/enemy/bacteria/bacteria1.png");
+        renderer =new Animation(
+                ImageUtil.LoadImage("images/enemy/bacteria/bacteria1.png"),
+                ImageUtil.LoadImage("images/enemy/bacteria/bacteria2.png"),
+                ImageUtil.LoadImage("images/enemy/bacteria/bacteria3.png"),
+                ImageUtil.LoadImage("images/enemy/bacteria/bacteria4.png")
+        );
         counter=new FrameCounter(50);
         counter.count=30;
         this.boxCollider=new BoxCollider(x,y,30,30);
@@ -51,6 +56,8 @@ public class Enemy extends GameObject {
     }
 
     public void getHit(){
+
         this.destroy();
+        GameObject.add(new EnemyExplosion((int)position.x,(int)position.y));
     }
 }

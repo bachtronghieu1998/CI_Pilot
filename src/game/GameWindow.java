@@ -25,7 +25,6 @@ public class GameWindow extends JFrame {
         gameCanvas = new GameCanvas();
         this.setContentPane(gameCanvas);
 
-
         this.addMouseMotionListener(new MouseAdapter() {
 
             @Override
@@ -70,14 +69,13 @@ public class GameWindow extends JFrame {
         this.setVisible(true);
     }
 
-    boolean update = true;
+
 
     public void MainLoop() {
         while (true) {
             long currentTime = System.nanoTime();
             if (currentTime - lastTimeRender >= 17_000_000) {
                 gameCanvas.update();
-                update = !update;
                 gameCanvas.render();
                 lastTimeRender = currentTime;
             }

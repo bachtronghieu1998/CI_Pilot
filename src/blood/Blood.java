@@ -1,6 +1,5 @@
 package blood;
 
-import bases.FrameCounter;
 import bases.GameObject;
 import bases.ImageRenderer;
 import bases.Vector2D;
@@ -12,7 +11,7 @@ public class Blood extends GameObject {
 
 
     public Blood() {
-        imageRenderer=new ImageRenderer("images/blood cells/blood-cell1.png");
+        renderer =new ImageRenderer("images/blood cells/blood-cell1.png");
         Random rd=new Random();
         int x= rd.nextInt(Setting.width-64*2)+64;
         int y=rd.nextInt(Setting.height/2);
