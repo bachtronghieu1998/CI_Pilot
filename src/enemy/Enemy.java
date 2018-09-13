@@ -27,13 +27,9 @@ public class Enemy extends GameObject {
 
 
     public void LockBullet(){
-        //Not add bullet if enemy go out of screen
-        if(position.y>720){
-            return;
-        }
 
         if(counter.expired){
-            GameObject.add(new EnemyBullet((int)position.x,(int)position.y));
+            GameObject.recycle((int)position.x,(int)position.y,EnemyBullet.class);
             counter.reset();
         }else{
             counter.run();
@@ -47,8 +43,10 @@ public class Enemy extends GameObject {
        veclocity.y+=2;
        position.addUp(veclocity);
        LockBullet();
-
+        deactiveIfNeeded();
     }
+
+
 
    public void render(Graphics g){
         super.render(g);

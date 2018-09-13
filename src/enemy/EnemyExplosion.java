@@ -6,11 +6,11 @@ import bases.ImageUtil;
 
 public class EnemyExplosion extends GameObject {
 
-    
+
     public EnemyExplosion(int x, int y) {
         super(x, y);
 
-        this.renderer=new Animation(3,false,
+        this.renderer=new Animation(3,true,
                 ImageUtil.LoadImage("images/enemy/bacteria/bacteria_dead1.png"),
         ImageUtil.LoadImage("images/enemy/bacteria/bacteria_dead2.png"),
         ImageUtil.LoadImage("images/enemy/bacteria/bacteria_dead3.png"),

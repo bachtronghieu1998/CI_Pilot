@@ -22,7 +22,7 @@ public class EnemySpawner extends GameObject {
             Random rd=new Random();
             int x= rd.nextInt(Setting.width-64*2)+64;
             int y=-64;
-            GameObject.add(new Enemy(x,y));
+            GameObject.recycle(x,y,Enemy.class);
             countEnemy.reset();
         }else{
             countEnemy.run();

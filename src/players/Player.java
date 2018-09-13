@@ -47,7 +47,7 @@ public class Player extends GameObject {
     private void hitEnemy() {
         Enemy enemy= GameObject.checkCollision(this.boxCollider,Enemy.class);
         if(enemy!=null){
-         //  this.isActive=false;
+           this.isActive=false;
         }
     }
 

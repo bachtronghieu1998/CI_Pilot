@@ -23,9 +23,9 @@ public class GameCanvas extends JPanel {
         GameObject.add(backGround);
         inputManager= InputManager.instance;
         player=new Player(200,500,"images/player/MB-69/player1.png",1);
-        player2=new Player(400,500,"images/player/MB-70/player1.png",2);
+//        player2=new Player(400,500,"images/player/MB-70/player1.png",2);
         GameObject.add(player);
-        GameObject.add(player2);
+//        GameObject.add(player2);
         backBuffer=new BufferedImage(600,800, BufferedImage.TYPE_INT_ARGB);
         backBufferGraphics=backBuffer.getGraphics();
     }

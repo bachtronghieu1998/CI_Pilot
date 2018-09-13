@@ -1,16 +1,19 @@
 package players;
 
-import bases.BoxCollider;
-import bases.GameObject;
-import bases.ImageRenderer;
-import bases.Vector2D;
+import bases.*;
 import enemy.Enemy;
 
 public class PlayerBullet extends GameObject {
 
-    public PlayerBullet(int x, int y,String url) {
+    public PlayerBullet(int x, int y) {
         super(x, y);
-        this.renderer =new ImageRenderer(url);
+        this.renderer =new Animation(
+                5,false,
+                ImageUtil.LoadImage("images/bullet/player/mb69bullet1.png"),
+                ImageUtil.LoadImage("images/bullet/player/mb69bullet2.png"),
+                ImageUtil.LoadImage("images/bullet/player/mb69bullet3.png"),
+                ImageUtil.LoadImage("images/bullet/player/mb69bullet4.png")
+        );
         this.boxCollider=new BoxCollider(x,y,10,20);
     }
 
@@ -21,6 +24,8 @@ public class PlayerBullet extends GameObject {
          hitEnemies();
          deactiveIfNeeded();
     }
+
+
 
     public void deactiveIfNeeded(){
         if(position.y<0){

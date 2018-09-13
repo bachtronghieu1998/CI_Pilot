@@ -18,8 +18,9 @@ public class EnemyBullet extends GameObject {
         super.run();
         move();
         hitPlayer();
-
+        deactiveIfNeeded();
     }
+
 
     private void hitPlayer() {
        Player player= GameObject.checkCollision(this.boxCollider,Player.class);

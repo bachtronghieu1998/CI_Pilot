@@ -1,6 +1,9 @@
 package bases;
 
+import blood.Blood;
 import blood.BloodSpawner;
+import enemy.Enemy;
+import enemy.EnemyBullet;
 import enemy.EnemySpawner;
 import players.Player;
 import players.PlayerBullet;
@@ -49,7 +52,7 @@ public class GameObject {
         }
         gameObjects.addAll(newGameObjects);
         newGameObjects.clear();
-
+        System.out.println(gameObjects.size());
         BloodSpawner.bloodSpawner.insertBlood();
         EnemySpawner.enemySpawner.insertEnemy();
     }
@@ -95,23 +98,57 @@ public class GameObject {
         this.isActive=false;
     }
 
-    public static PlayerBullet recycle(int x,int y,String url){
-        PlayerBullet pb=null;
+//    public static PlayerBullet recycle(int x,int y,String url){
+//        PlayerBullet pb=null;
+//        for(GameObject go:gameObjects){
+//            if (!go.isActive) {
+//                if(go instanceof PlayerBullet){
+//                    pb= (PlayerBullet) go;
+//                }
+//            }
+//        }
+//        if(pb==null){
+//            pb=new PlayerBullet(x,y,url);
+//            GameObject.add(pb);
+//        }else{
+//            pb.isActive=true;
+//            pb.position.x=x;
+//            pb.position.y=y;
+//        }
+//        return null;
+//    }
+
+    public static <T extends GameObject> T recycle(int x,int y,Class<T> cls){
+        T pb=null;
         for(GameObject go:gameObjects){
             if (!go.isActive) {
-                if(go instanceof PlayerBullet){
-                    pb= (PlayerBullet) go;
+                if(go.getClass().equals(cls)){
+                    pb= (T) go;
                 }
             }
         }
         if(pb==null){
-            pb=new PlayerBullet(x,y,url);
-            GameObject.add(pb);
+             if(cls.equals(Enemy.class)){
+                 add(new Enemy(x,y));
+             } else if(cls.equals(EnemyBullet.class)){
+                 add(new EnemyBullet(x,y));
+             }else if(cls.equals(PlayerBullet.class)){
+                add(new PlayerBullet(x,y));
+             }else if(cls.equals(Blood.class)){
+                 add(new Blood(x,y));
+             }
+
         }else{
             pb.isActive=true;
             pb.position.x=x;
             pb.position.y=y;
         }
         return null;
+    }
+
+    public void deactiveIfNeeded(){
+        if(position.y>750){
+            this.isActive=false;
+        }
     }
 }

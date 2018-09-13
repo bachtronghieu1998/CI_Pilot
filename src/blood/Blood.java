@@ -9,20 +9,24 @@ import java.util.Random;
 
 public class Blood extends GameObject {
 
-
-    public Blood() {
+    public Blood(int x,int y) {
+       super(x,y);
         renderer =new ImageRenderer("images/blood cells/blood-cell1.png");
-        Random rd=new Random();
-        int x= rd.nextInt(Setting.width-64*2)+64;
-        int y=rd.nextInt(Setting.height/2);
-        this.position=new Vector2D(x,y);
     }
 
     public void run(){
+//        super.run();
         Vector2D veclocity=new Vector2D();
         veclocity.x+=1;
         veclocity.y+=1;
         this.position.addUp(veclocity);
+        deactiveIfNeeded();
     }
 
+    @Override
+    public void deactiveIfNeeded() {
+        if(position.x>600){
+            this.isActive=false;
+        }
+    }
 }
